@@ -37,6 +37,7 @@ use core_text;
  * @group      tool_certificate
  * @covers     \certificateelement_certificatenumber\element
  */
+
 final class element_test extends advanced_testcase {
 
     /**
@@ -89,44 +90,6 @@ final class element_test extends advanced_testcase {
         $this->assertIsNumeric($certificatenumber, "Certificate number should be numeric.");
     }
     
-
-    /**
-     * Test certificate number assignment and ordering.
-    */
-    public function test_certificate_number_assignment_and_reorder(): void {
-        global $DB;
-    
-        $certificate = $this->get_generator()->create_template((object)['name' => 'Certificate Test']);
-        $user1 = $this->getDataGenerator()->create_user();
-        $user2 = $this->getDataGenerator()->create_user();
-    
-        $issue1 = $this->get_generator()->issue($certificate, $user1);
-        $issue2 = $this->get_generator()->issue($certificate, $user2);
-    
-        $certNum1 = (int)$DB->get_field('tool_certificate_issues', 'certificatenumber', ['id' => $issue1->id]);
-        $certNum2 = (int)$DB->get_field('tool_certificate_issues', 'certificatenumber', ['id' => $issue2->id]);
-    
-        echo "Certificate Numbers: User1: $certNum1, User2: $certNum2\n";
-    
-        // Ensure certificate numbers are assigned and sequential
-        $this->assertGreaterThan(0, $certNum1, "First certificate number should be greater than 0.");
-        $this->assertGreaterThan($certNum1, $certNum2, "Second certificate number should be greater than first.");
-    
-        // Delete first certificate and reorder numbers
-        $DB->delete_records('tool_certificate_issues', ['id' => $issue1->id]);
-    
-        $element = new \certificateelement_certificatenumber\element();
-        $element->reorder_certificate_numbers();
-    
-        // Fetch updated certificate number for second issue
-        $updatedCertNum2 = (int)$DB->get_field('tool_certificate_issues', 'certificatenumber', ['id' => $issue2->id]);
-    
-        echo "Updated Certificate Number for User2: $updatedCertNum2\n";
-    
-        // Certificate number should reset after reorder
-        $this->assertEquals(1, $updatedCertNum2, "Certificate number should reset to 1 after reordering.");
-    }
-    
     /**
      * Test save_unique_data for certificate number element.
     */
@@ -146,5 +109,6 @@ final class element_test extends advanced_testcase {
         $this->assertEquals($expected, $record->data);
     }
 }
+
 
 

@@ -7,22 +7,18 @@
     <TABLE NAME="tool_certificate_number" COMMENT="Stores copied certificate issues for certificate numbering.">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="certificateid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="templateid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="code" TYPE="char" LENGTH="40" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="emailed" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="expires" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="issueid" TYPE="int" LENGTH="10" NOTNULL="true"/>
         <FIELD NAME="data" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="component" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="archived" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-        <FIELD NAME="certificatenumber" TYPE="int" LENGTH="11" NOTNULL="false" DEFAULT="0" SEQUENCE="false"/>
-      </FIELDS>
-      <KEYS>
+        <FIELD NAME="certificatenumber" TYPE="char" LENGTH="255" NOTNULL="true"/>
+        <FIELD NAME="code" TYPE="char" LENGTH="255" NOTNULL="true"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true"/>
+        <FIELD NAME="expires" TYPE="int" LENGTH="10" NOTNULL="false"/>
+    </FIELDS>
+
+    <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-      </KEYS>
+        <KEY NAME="issueid_fk" TYPE="foreign" FIELDS="issueid" REFTABLE="tool_certificate_issues" REFFIELDS="id" ONDELETE="cascade"/>
+    </KEYS>
     </TABLE>
   </TABLES>
 </XMLDB>
